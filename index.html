@@ -33,7 +33,7 @@
                 폭발물탐지견, 은퇴 훈련견 등 멋진 활약을 펼친 봉사동물들이 따뜻한 품을 기다리고 있습니다.<br>
                 간단한 취향 및 환경 조사를 통해 나와 가장 교감이 잘 될 친구를 추천해 드릴게요!
             </p>
-            <button onclick="startQuiz()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-8 py-3 rounded-xl shadow-lg transition duration-200 cursor-pointer w-full md:w-auto">
+            <button id="btn-start" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-8 py-3 rounded-xl shadow-lg transition duration-200 cursor-pointer w-full md:w-auto">
                 매칭 퀴즈 시작하기 ✨
             </button>
         </div>
@@ -69,10 +69,10 @@
             </div>
 
             <div class="flex flex-col sm:flex-row gap-3">
-                <button onclick="restartQuiz()" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold py-3 rounded-xl transition duration-200 cursor-pointer">
+                <button id="btn-restart" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold py-3 rounded-xl transition duration-200 cursor-pointer">
                     다시 테스트하기 🔄
                 </button>
-                <button onclick="alert('입양 신청(모의) 기능이 접수되었습니다! 농림축산검역본부 봉사동물 담당 부서로 문의바랍니다.')" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl shadow-md transition duration-200 cursor-pointer">
+                <button id="btn-apply" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl shadow-md transition duration-200 cursor-pointer">
                     입양 문의 / 신청하기 💌
                 </button>
             </div>
@@ -92,4 +92,120 @@
             {"동물명": "노랑", "픔종명": "비글", "색상": "흰색&갈색&탄", "성별": "수컷", "중성화여부": "Y", "특징": "활발함", "담당업무명": "은퇴견", "스토리": "사람들과도 다른 친구들과도 잘 지내요. 혼자 있으면 차분하고 얌전하지만, 함께 산책할 때는 언제그랬냐는 듯 즐겁게 뛰어 놀아요.", "입양여부": "N"},
             {"동물명": "루이", "픔종명": "라브라도 리트리버", "색상": "황색", "성별": "수컷", "중성화여부": "Y", "특징": "온순함", "담당업무명": "은퇴견", "스토리": "듬직하고 사람을 너무 좋아하는 리트리버입니다. 차분하게 실내 생활을 잘 적응하는 모범생이에요.", "입양여부": "N"},
             {"동물명": "초코", "픔종명": "벨지안 셰퍼드 독(마리노이즈)", "색상": "황갈색", "성별": "암컷", "중성화여부": "Y", "특징": "영리함", "담당업무명": "폭발물탐지견", "스토리": "명민하고 운동 신경이 뛰어납니다. 교감 능력이 깊어 보호자와 함께 야외 활동을 즐기는 분에게 최고의 파트너입니다.", "입양여부": "N"},
-            {"동물명": "마루", "픔종
+            {"동물명": "마루", "픔종명": "잉글리쉬 스프링거 스파니엘", "색상": "흰색&갈색", "성별": "수컷", "중성화여부": "Y", "특징": "친화력 좋음", "담당업무명": "폭발물 탐지견", "스토리": "탐지 활동 경험이 풍부하며 후각 활동과 간식 놀이를 아주 좋아합니다. 사람 품에 안기는 것을 좋아하는 귀여운 장난꾸러기입니다.", "입양여부": "N"},
+            {"동물명": "태풍", "픔종명": "셰퍼드", "색상": "검정&갈색", "성별": "수컷", "중성화여부": "Y", "특징": "든든함", "담당업무명": "훈련견", "스토리": "든든한 체격과 의리 있는 성품을 가졌습니다. 차분한 환경에서 남은 여생을 함께할 따뜻한 가족을 찾고 있어요.", "입양여부": "N"},
+            {"동물명": "바다", "픔종명": "라브라도 리트리버", "색상": "크림색", "성별": "암컷", "중성화여부": "Y", "특징": "다정함", "담당업무명": "은퇴견 업무 총괄", "스토리": "모든 사람에게 친절하고 다정한 성격을 가졌습니다. 실내 산책과 여유로운 휴식을 즐기는 사랑스러운 친구입니다.", "입양여부": "N"}
+        ];
+
+        const questions = [
+            {
+                title: "Q1. 평소 선호하거나 자신 있는 산책 및 활동 스타일은 무엇인가요?",
+                options: [
+                    { text: "가볍고 여유로운 동네 산책과 실내 교감이 좋아요", type: "retriever" },
+                    { text: "활동량이 많고 활기차게 함께 뛰어노는 야외 활동이 좋아요", type: "beagle_shepherd" }
+                ]
+            },
+            {
+                title: "Q2. 선호하는 반려견의 체급이나 성향은 어떤가요?",
+                options: [
+                    { text: "듬직하고 온순하며 차분한 대형견 (리트리버 등)", type: "retriever" },
+                    { text: "날렵하고 영리하며 교감 에너지가 넘치는 친구", type: "beagle_shepherd" }
+                ]
+            },
+            {
+                title: "Q3. 은퇴 봉사동물과 함께 하고 싶은 우리 집의 환경은 어떤가요?",
+                options: [
+                    { text: "가족 구성원이 함께 시간을 많이 보낼 수 있는 따뜻한 가정", type: "retriever" },
+                    { text: "규칙적인 산책과 풍부한 놀이 환경을 제공할 수 있는 곳", type: "beagle_shepherd" }
+                ]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = [];
+
+        // DOM 로딩 완료 후 안전하게 이벤트 바인딩
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnStart = document.getElementById('btn-start');
+            const btnRestart = document.getElementById('btn-restart');
+            const btnApply = document.getElementById('btn-apply');
+
+            if (btnStart) btnStart.addEventListener('click', startQuiz);
+            if (btnRestart) btnRestart.addEventListener('click', restartQuiz);
+            if (btnApply) btnApply.addEventListener('click', () => {
+                alert('입양 신청(모의) 기능이 접수되었습니다! 농림축산검역본부 봉사동물 담당 부서로 문의바랍니다.');
+            });
+        });
+
+        function startQuiz() {
+            document.getElementById('screen-intro').classList.add('hidden');
+            document.getElementById('screen-quiz').classList.remove('hidden');
+            currentQuestion = 0;
+            userAnswers = [];
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            
+            document.getElementById('question-progress').innerText = `QUESTION ${currentQuestion + 1} / ${questions.length}`;
+            document.getElementById('progress-percent').innerText = `${Math.round(progress)}%`;
+            document.getElementById('bar').style.width = `${progress}%`;
+            document.getElementById('question-title').innerText = q.title;
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            q.options.forEach((opt) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-xl border border-slate-200 hover:border-emerald-500 hover:bg-emerald-50 transition duration-200 font-medium text-slate-700 cursor-pointer flex items-center justify-between";
+                btn.innerHTML = `<span>${opt.text}</span> <span class="text-emerald-600 font-bold">→</span>`;
+                btn.addEventListener('click', () => selectOption(opt.type));
+                container.appendChild(btn);
+            });
+        }
+
+        function selectOption(type) {
+            userAnswers.push(type);
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('screen-quiz').classList.add('hidden');
+            document.getElementById('screen-result').classList.remove('hidden');
+
+            const matchedAnimal = animalData[Math.floor(Math.random() * animalData.length)];
+
+            const resultCard = document.getElementById('result-card');
+            resultCard.innerHTML = `
+                <div class="flex flex-col md:flex-row items-center gap-6">
+                    <div class="w-24 h-24 bg-emerald-600 text-white rounded-full flex items-center justify-center text-4xl shadow-inner shrink-0">
+                        🐶
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-2xl font-bold text-slate-900">${matchedAnimal.동물명}</span>
+                            <span class="bg-emerald-200 text-emerald-800 text-xs font-semibold px-2.5 py-0.5 rounded">${matchedAnimal.픔종명}</span>
+                        </div>
+                        <p class="text-xs text-emerald-700 font-semibold mb-2">담당 업무: ${matchedAnimal.담당업무명} | 성별: ${matchedAnimal.성별} | 특징: ${matchedAnimal.특징 || '온순함'}</p>
+                        <p class="text-slate-600 text-sm leading-relaxed bg-white/80 p-3 rounded-lg border border-emerald-100">
+                            "${matchedAnimal.스토리}"
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function restartQuiz() {
+            document.getElementById('screen-result').classList.add('hidden');
+            document.getElementById('screen-intro').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
